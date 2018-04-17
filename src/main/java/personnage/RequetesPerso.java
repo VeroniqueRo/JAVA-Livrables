@@ -80,23 +80,22 @@ public class RequetesPerso {
             System.out.println("\n------------------------------------------------------------------------------------------");
 
             // Permet d'afficher les infos de la première ligne
-            result.first();
-            System.out.println("Type : " + result.getString("Type"));
-            System.out.println("Nom : " + result.getString("Nom"));
-            System.out.println("Image : " + result.getString("Image"));
-            System.out.println("Niveau de vie : " + result.getString("NiveauVie"));
-            System.out.println("Niveau d'attaque : " + result.getString("Attaque"));
-            System.out.println("Niveau de l'arme : " + result.getString("Arme"));
-            System.out.println("Niveau du bouclier : " + result.getString("Bouclier"));
+//            result.first();
+//            System.out.println("Type : " + result.getString("Type"));
+//            System.out.println("Nom : " + result.getString("Nom"));
+//            System.out.println("Image : " + result.getString("Image"));
+//            System.out.println("Niveau de vie : " + result.getString("NiveauVie"));
+//            System.out.println("Niveau d'attaque : " + result.getString("Attaque"));
+//            System.out.println("Niveau de l'arme : " + result.getString("Arme"));
+//            System.out.println("Niveau du bouclier : " + result.getString("Bouclier"));
 
 //            System.out.print("\nAFFICHE LE PERSONNAGE DE LA BDD CHOISI");
 //            System.out.println("\n------------------------------------------------------------------------------------------");
 //
-//            while (result.next()) {
-//                for (int i = 1; i <= resultMeta.getColumnCount(); i++)
-//                    System.out.print("\t" + result.getObject(i).toString() + "\t |");
-//                System.out.println("\n---------------------------------------------------------------------------------------");
-//            }
+            result.first();
+                for (int i = 1; i <= resultMeta.getColumnCount(); i++)
+                    System.out.print("\t" + result.getObject(i).toString() + "\t |");
+                System.out.println("\n---------------------------------------------------------------------------------------");
 
             result.close();
             state.close();
@@ -132,6 +131,36 @@ public class RequetesPerso {
             state.setInt(2, idPersoModif);
 
             state.executeUpdate();
+            state.close();
+
+            afficheTousPerso();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void supprimeUnPerso() {
+        try {
+            // Appel la classe ConnexionBDD et lance la connexion
+            Connection conn = ConnexionBDD.ouvrir();
+            Scanner sc = new Scanner(System.in);
+
+            afficheTousPerso();
+            System.out.println("Choisissez l'id du personnage à supprimer");
+            int idPersoSupp = sc.nextInt();
+            sc.nextLine();
+
+            // Requète à éxécuter
+            String query = "DELETE FROM personnage WHERE Id= ?";
+
+            // Exécute la requête
+            PreparedStatement state = conn.prepareStatement(query);
+
+            // Indique ce qui doit être dans le ?
+            state.setInt(1, idPersoSupp);
+
+            state.execute();
             state.close();
 
             afficheTousPerso();

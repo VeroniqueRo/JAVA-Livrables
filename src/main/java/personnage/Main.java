@@ -20,7 +20,8 @@ public class Main {
             System.out.println("3. Modifier le nom d'un personnage de la BDD");
             System.out.println("4. Ajouter un guerrier à la BDD");
             System.out.println("5. Ajouter un magicien à la BDD");
-            System.out.println("\n6. Quitter");
+            System.out.println("6. Effacer une entrée de la BDD");
+            System.out.println("\n7. Quitter");
             System.out.println("**********************************************");
             // Gestion d'une exception simple : Si la saisie n'est pas un "integer"
             try {
@@ -52,13 +53,17 @@ public class Main {
                     break;
 
                 case 6:
+                    listePersonages.supprimeUnPerso();
+                    break;
+
+                case 7:
                     break;
 
                 default:
 //                    System.out.println("Erreur de saisie");
             }
 
-        } while (choix != 6);
+        } while (choix != 7);
 
         System.out.println("A bientôt !");
     }
